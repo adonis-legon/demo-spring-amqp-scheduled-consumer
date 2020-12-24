@@ -1,4 +1,4 @@
-# Demo project for Spring Boot AMQP Custom Consumer
+# Demo project for Spring Boot AMQP Scheduled Consumer
 
 ## Test locally
 
