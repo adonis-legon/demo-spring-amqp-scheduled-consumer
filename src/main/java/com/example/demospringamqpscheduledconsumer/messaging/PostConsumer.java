@@ -24,7 +24,13 @@ public class PostConsumer {
 	}
 
 	public void handleMessage(String message) {
-		System.out.println(String.format("Message consumed: %s, from thread %d", message, Thread.currentThread().getId()));
+		try {
+			// simulate workload...
+			Thread.sleep(1000L);
+			System.out.println(String.format("Message consumed: %s, from thread %d", message, Thread.currentThread().getId()));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Scheduled(cron = "#{postQueueConfig.getConsumerSchedule()}")
