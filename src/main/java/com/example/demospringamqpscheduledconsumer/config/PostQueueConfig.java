@@ -45,9 +45,10 @@ public class PostQueueConfig {
       SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
       
       container.setQueueNames(queue);
-      container.setMessageListener(new MessageListenerAdapter(new PostConsumer()));
       container.setAutoStartup(false);
       container.setConcurrency(consumerConcurrency);
+      container.setPrefetchCount(1);
+      container.setMessageListener(new MessageListenerAdapter(new PostConsumer()));
 
       return container;
     }
