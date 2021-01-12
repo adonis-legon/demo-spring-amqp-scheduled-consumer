@@ -24,11 +24,11 @@ public class PostConsumer {
 	}
 
 	public void handleMessage(String message) {
-		System.out.println("Message consumed: " + message);
+		System.out.println(String.format("Message consumed: %s, from thread %d", message, Thread.currentThread().getId()));
 	}
 
 	@Scheduled(cron = "#{postQueueConfig.getConsumerSchedule()}")
-	public void toggleConsume() {
+	public synchronized void toggleConsume() {
 		isConsuming = !isConsuming;
 
 		if (isConsuming) {

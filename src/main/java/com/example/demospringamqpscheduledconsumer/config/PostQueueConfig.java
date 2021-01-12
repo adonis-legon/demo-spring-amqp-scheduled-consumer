@@ -23,6 +23,7 @@ public class PostQueueConfig {
     private String routingKey;
     private String queue;
     private String consumerSchedule;
+    private String consumerConcurrency;
 
     @Bean
     Queue queue() {
@@ -46,6 +47,7 @@ public class PostQueueConfig {
       container.setQueueNames(queue);
       container.setMessageListener(new MessageListenerAdapter(new PostConsumer()));
       container.setAutoStartup(false);
+      container.setConcurrency(consumerConcurrency);
 
       return container;
     }
