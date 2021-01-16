@@ -1,4 +1,4 @@
-package com.example.demospringamqpscheduledconsumer.messaging;
+package com.example.demospringamqpscheduledconsumer.schedule;
 
 import com.example.demospringamqpscheduledconsumer.config.PostQueueConfig;
 
@@ -9,29 +9,19 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PostConsumer {
-	private Boolean isConsuming;
+public class PostScheduler {
+    private Boolean isConsuming;
 
 	@Autowired
 	@Qualifier("consumer")
-	SimpleMessageListenerContainer consumer;
-
+    SimpleMessageListenerContainer consumer;
+    
 	@Autowired
-	PostQueueConfig postQueueConfig;
-
-	public PostConsumer() {
-		isConsuming = false;
-	}
-
-	public void handleMessage(String message) {
-		try {
-			// simulate workload...
-			Thread.sleep(1000L);
-			System.out.println(String.format("Message consumed: %s, from thread %d", message, Thread.currentThread().getId()));
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+    PostQueueConfig postQueueConfig;
+    
+    public PostScheduler() {
+        isConsuming = false;
+    }
 
 	@Scheduled(cron = "#{postQueueConfig.getConsumerSchedule()}")
 	public synchronized void toggleConsume() {
